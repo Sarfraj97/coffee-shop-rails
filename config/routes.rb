@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :items
       resources :orders
+      resources :customers
     end
   end
 end
