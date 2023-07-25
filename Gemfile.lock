@@ -87,6 +87,8 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    enumerize (2.7.0)
+      activesupport (>= 3.2)
     erubi (1.11.0)
     faraday (2.7.1)
       faraday-net_http (>= 2.0, < 3.1)
@@ -195,6 +197,7 @@ DEPENDENCIES
   bootsnap
   debug
   dotenv-rails
+  enumerize
   numbers_in_words
   pg (~> 1.1)
   puma (~> 5.0)
