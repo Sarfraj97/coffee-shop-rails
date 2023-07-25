@@ -3,8 +3,9 @@ class Api::V1::CustomersController < ApplicationController
   before_action :set_customer, only: %i[update destroy show]
 
   def index
-    @customers = Customer.all.order('created_at DESC')
-    render json: @customers
+    random_customer = Customer.random_customer
+    @customers = Customer.order(Arel.sql("CASE WHEN id = #{random_customer.id} THEN 0 ELSE 1 END, created_at DESC"))
+    render json: @customers, each_serializer: CustomersSerializer
   end
 
   def create

@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_14_065947) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_24_090612) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "customers", force: :cascade do |t|
+    t.string "name"
+    t.text "address"
+    t.string "city"
+    t.string "phone_number"
+    t.string "state"
+    t.integer "state_code"
+    t.string "gst"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "items", force: :cascade do |t|
     t.string "name"
@@ -20,6 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_065947) do
     t.integer "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "quantity"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -38,6 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_14_065947) do
     t.string "phone_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "customer_id"
   end
 
   add_foreign_key "order_items", "items"

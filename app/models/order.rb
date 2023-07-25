@@ -28,7 +28,7 @@ class Order < ApplicationRecord
   def calculate_total_price
     total_price = 0
     order_items.each do |order_item|
-      total_price += order_item.quantity * order_item.item.tax_price
+      total_price += order_item.quantity * order_item.item.price
     end
     update(total_price: total_price)
   end

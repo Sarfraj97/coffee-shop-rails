@@ -11,7 +11,7 @@ class Item < ApplicationRecord
   enum :category, { coffee: 0, dessert: 1, drinks: 2, bites: 3, combo: 4 }
 
   def tax_price
-    price > 35 ? self.price += tax_amount : self.price
+    self.price
   end
 
   def tax_amount
