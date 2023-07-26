@@ -3,7 +3,6 @@
 class Order < ApplicationRecord
   belongs_to :customer
   has_many :order_items, dependent: :destroy
-  validates_presence_of :order_items
   has_many :items, through: :order_items
 
   enum :status, { in_progress: 0, completed: 1, paid: 2 }, default: 0
