@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class Api::V1::OrdersController < ApplicationController
   before_action :set_order, only: %i[show update]
+  before_action :set_customer, only: %i[create]
 
   def index
     @orders = Order.all
@@ -12,7 +13,7 @@ class Api::V1::OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new(order_params)
+    @order = @customer.orders.new(order_params)
     if @order.save
       @order.add_item(params[:item_ids]) if params[:item_ids].present?
       render json: @order
@@ -50,5 +51,9 @@ class Api::V1::OrdersController < ApplicationController
 
   def set_order
     @order = Order.find(params[:id])
+  end
+
+  def set_customer
+    @customer = Customer.find(params[:id])
   end
 end
