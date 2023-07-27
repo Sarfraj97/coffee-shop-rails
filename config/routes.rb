@@ -10,7 +10,9 @@ Rails.application.routes.draw do
       resources :items
       resources :orders
       resources :customers
+      resources :transactions
       post '/customer/:id/orders', to: 'orders#create'
+      post '/customer/:id/transactions', to: 'transactions#create'
     end
   end
 end

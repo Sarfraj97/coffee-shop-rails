@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_25_094838) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_122434) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,6 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_094838) do
     t.string "gst"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "total_amount"
   end
 
   create_table "items", force: :cascade do |t|
@@ -54,6 +55,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_094838) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "customer_id"
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.integer "amount_type"
+    t.integer "amount"
+    t.bigint "customer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_transactions_on_customer_id"
   end
 
   add_foreign_key "order_items", "items"
