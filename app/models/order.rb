@@ -33,7 +33,6 @@ class Order < ApplicationRecord
   end
 
   def create_transaction
-    debugger
     customer.account.transactions.create!(transaction_type: status, transaction_amount: total_price,account_id:  customer.account.id)
   end
 
