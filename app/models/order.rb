@@ -4,10 +4,10 @@ class Order < ApplicationRecord
   belongs_to :customer
   has_many :order_items, dependent: :destroy
   has_many :items, through: :order_items
+  has_many :reminders, as: :remindable
+  after_save :create_transaction
 
-  enum :status, { in_progress: 0, completed: 1, paid: 2 }, default: 0
-
-  after_save :send_cofirmation_sms
+  enum :status, { due: 0, paid: 1 }, default: 0
 
   validates :phone_number, presence: true
 
@@ -32,8 +32,8 @@ class Order < ApplicationRecord
     update(total_price: total_price)
   end
 
-  def send_cofirmation_sms
-    return unless status == 'paid'
-    SendMessageJob.set(wait: 30.seconds).perform_later(phone_number)
+  def create_transaction
+    customer.account.transactions.create!(transaction_type: status, transaction_amount: total_price,account_id:  customer.account.id)
   end
+
 end
