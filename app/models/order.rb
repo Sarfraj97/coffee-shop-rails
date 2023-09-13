@@ -23,7 +23,7 @@ class Order < ApplicationRecord
     end
     calculate_total_price
   end
-
+  
   def calculate_total_price
     total_price = 0
     order_items.each do |order_item|

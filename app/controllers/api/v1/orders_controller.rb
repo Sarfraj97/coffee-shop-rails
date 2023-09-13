@@ -14,15 +14,24 @@ class Api::V1::OrdersController < ApplicationController
 
   def create
     @order = @customer.orders.new(order_params)
-    if @order.save
-      @order.add_item(params[:item_ids]) if params[:item_ids].present?
-      render json: @order
+  
+    if params[:item_ids].present?
+      params[:item_ids].each do |param|
+        @order.order_items.build(item_id: param[:id], quantity: param[:quantity])
+      end
+  
+      if @order.save
+        render json: @order
+      else
+        render json: { error: @order.errors.full_messages },
+               status: :unprocessable_entity
+      end
     else
-      render json: { error: @order.errors.full_messages },
-              status: :unprocessable_entity
+      # Handle the case where item_ids are not present or empty
+      render json: { error: 'Item IDs are missing' }, status: :unprocessable_entity
     end
   end
-
+  
   def update
     if @order.update(order_params)
       @order.add_item(params[:item_ids]) if params[:item_ids].present?
