@@ -3,6 +3,7 @@
 class OrderItem < ApplicationRecord
   belongs_to :order
   belongs_to :item
+  validates :quantity, presence: true
   after_create :quantity_update
 
   def quantity_update
