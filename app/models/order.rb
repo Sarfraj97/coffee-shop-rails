@@ -5,7 +5,7 @@ class Order < ApplicationRecord
   has_many :order_items, dependent: :destroy
   has_many :items, through: :order_items
   has_many :reminders, as: :remindable
-  after_save :create_transaction
+  # after_save :create_transaction
 
   enum :status, { due: 0, paid: 1 }, default: 0
 
@@ -32,8 +32,7 @@ class Order < ApplicationRecord
     update(total_price: total_price)
   end
 
-  def create_transaction
-    customer.account.transactions.create!(transaction_type: status, transaction_amount: total_price,account_id:  customer.account.id)
-  end
-
+  # def create_transaction
+  #   customer.account.transactions.create!(transaction_type: status, transaction_amount: total_price,account_id:  customer.account.id)
+  # end
 end
