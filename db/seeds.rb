@@ -21,3 +21,10 @@ Item.create(
     { name: 'SuperCover', price: 850, category_id: Category.first.id, quantity: 4 , volume_type: 1 }
   ]
 )
+
+Customer.create!(
+  [
+    { name: 'random', phone_number: '1235567899'},
+    { name: 'Ayyub bhai', phone_number: '9899899989' }
+  ]
+)
