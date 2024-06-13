@@ -12,10 +12,8 @@ Steps for setup back end
 
 I have added following features.
 
-1. User can add item with quantity in invoice.
+1. User can add item with category and quantity.
 
-2. Order will create with selected items and total price including tax and free items.
+2. Order will create with selected items and total price including tax/free items.
 
-3. When user paid for the given order after a specific time SMS will be sent to user's phone number.
-
-4. I have used twilio for SMS service so you can get twilio ACCOUNT_SID and AUTH_TOKEN by create a trial account.
+3. Item records can be added.
