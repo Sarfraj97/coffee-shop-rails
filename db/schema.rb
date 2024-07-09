@@ -10,9 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_25_094838) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_09_130248) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "customers", force: :cascade do |t|
     t.string "name"
@@ -26,15 +32,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_094838) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "items", force: :cascade do |t|
-    t.string "name"
-    t.float "price"
+  create_table "inventories", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "warehouse_id"
+    t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "quantity"
-    t.integer "volume"
-    t.integer "volume_type"
-    t.string "company"
+    t.index ["product_id"], name: "index_inventories_on_product_id"
+    t.index ["warehouse_id"], name: "index_inventories_on_warehouse_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -56,6 +61,39 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_094838) do
     t.integer "customer_id"
   end
 
-  add_foreign_key "order_items", "items"
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.float "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "volume_type"
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_products_on_category_id"
+  end
+
+  create_table "reminders", force: :cascade do |t|
+    t.string "title"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "remindable_id"
+    t.string "remindable_type"
+  end
+
+  create_table "variants", force: :cascade do |t|
+    t.bigint "products_id"
+    t.decimal "weight"
+    t.decimal "length"
+    t.decimal "height"
+    t.decimal "cost_price"
+    t.string "cost_currency"
+    t.string "sku"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["products_id"], name: "index_variants_on_products_id"
+  end
+
   add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "products", column: "item_id"
+  add_foreign_key "variants", "products", column: "products_id"
 end

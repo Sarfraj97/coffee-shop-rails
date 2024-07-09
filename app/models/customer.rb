@@ -2,7 +2,6 @@
 
 class Customer < ApplicationRecord
   has_many :orders
-  has_one :account
   has_many :reminders, as: :remindable
 
   def self.random_customer
