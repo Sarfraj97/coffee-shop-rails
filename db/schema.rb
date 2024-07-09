@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_09_130248) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_09_133512) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,12 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_09_130248) do
 
   create_table "customers", force: :cascade do |t|
     t.string "name"
-    t.text "address"
-    t.string "city"
     t.string "phone_number"
-    t.string "state"
-    t.integer "state_code"
-    t.string "gst"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -55,7 +50,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_09_130248) do
   create_table "orders", force: :cascade do |t|
     t.float "total_price"
     t.integer "status"
-    t.string "phone_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "customer_id"
@@ -63,10 +57,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_09_130248) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "volume_type"
     t.bigint "category_id"
     t.index ["category_id"], name: "index_products_on_category_id"
   end
