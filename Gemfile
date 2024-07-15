@@ -58,3 +58,8 @@ group :development do
   # gem "spring"
 end
 
+group :test do
+  gem 'rspec-rails', '~> 6.1.0'
+  gem 'database_cleaner-active_record'
+  gem 'factory_bot_rails'
+end
