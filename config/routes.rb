@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :items
+      resources :products
       resources :orders
       resources :customers
       post '/customer/:id/orders', to: 'orders#create'
