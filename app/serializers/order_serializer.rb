@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 class OrderSerializer < ActiveModel::Serializer
-  attributes :id, :total_price, :status, :phone_number
+  attributes :id, :total_price, :status
   has_many :order_items, each_serializer: OrderItemSerializer
-  has_many :items, through: :order_items, each_serializer: ItemSerializer
+  has_many :products, through: :order_items, each_serializer: ProductSerializer
 
   def total_price
     object.total_price.to_i
