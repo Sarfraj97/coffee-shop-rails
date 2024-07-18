@@ -43,7 +43,7 @@ class Api::V1::CustomersController < ApplicationController
   private
 
   def customer_params
-    params.require(:customer).permit(:name, :address, :city, :state, :phone_number, :gst, :state_code)
+    params.require(:customer).permit(:name, :phone_number)
   end
 
   def set_customer

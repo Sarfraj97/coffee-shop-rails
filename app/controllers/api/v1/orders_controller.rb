@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class Api::V1::OrdersController < ApplicationController
   before_action :set_order, only: %i[show update]
   before_action :set_customer, only: %i[create]
@@ -15,9 +14,9 @@ class Api::V1::OrdersController < ApplicationController
   def create
     @order = @customer.orders.new(order_params)
   
-    if params[:item_ids].present?
-      params[:item_ids].each do |param|
-        @order.order_items.build(item_id: param[:id], quantity: param[:quantity])
+    if params[:product_ids].present?
+      params[:product_ids].each do |param|
+        @order.order_items.build(product_id: param[:id], quantity: param[:quantity])
       end
   
       if @order.save
@@ -27,14 +26,13 @@ class Api::V1::OrdersController < ApplicationController
                status: :unprocessable_entity
       end
     else
-      # Handle the case where item_ids are not present or empty
-      render json: { error: 'Item IDs are missing' }, status: :unprocessable_entity
+      render json: { error: 'Product IDs are missing' }, status: :unprocessable_entity
     end
   end
   
   def update
     if @order.update(order_params)
-      @order.add_item(params[:item_ids]) if params[:item_ids].present?
+      @order.add_item(params[:product_ids]) if params[:product_ids].present?
       render json: @order
     else
       render json: { error: @order.errors.full_messages },
@@ -55,7 +53,7 @@ class Api::V1::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:total_price, :status, :phone_number)
+    params.require(:order).permit(:status)
   end
 
   def set_order
