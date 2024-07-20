@@ -1,6 +1,6 @@
 FactoryBot.define do
     factory :order_items do
-      product { association :product }
+      variant { association :variant }
       order { association :order }  
       quantity { 3 }  
     end
