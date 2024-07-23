@@ -2,7 +2,7 @@ class Api::V1::OrdersController < ApplicationController
   before_action :set_order, only: %i[show update]
   before_action :set_customer, only: %i[create]
 
-  def index
+  def index    
     @orders = Order.all
     render json: @orders
   end
@@ -12,10 +12,10 @@ class Api::V1::OrdersController < ApplicationController
   end
 
   def create
-    @order = @customer.orders.new(order_params)
-  
+    @order = @customer.orders.create!(order_params)
+    
     if params[:product_ids].present?
-      params[:product_ids].each do |param|
+      params[:product_ids].each do |param|        
         @order.order_items.build(product_id: param[:id], quantity: param[:quantity])
       end
   

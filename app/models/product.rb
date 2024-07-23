@@ -10,6 +10,7 @@ class Product < ApplicationRecord
 
   has_many :order_items, dependent: :destroy
   has_many :orders, through: :order_items
+  has_many :variants
   belongs_to :category
 
   # def create_reminder
